@@ -29,9 +29,6 @@ jobs:
         python-version: 3.7
     - name: 开始
       run: |
-        echo "Hello ${{ github.event.inputs.user }}!"
-        echo "- in ${{ github.event.inputs.pwd }}!"
-        echo "- step ${{ github.event.inputs.step }}!"
         pip install requests
         user='${{ github.event.inputs.user }}'
         pwd='${{ github.event.inputs.pwd }}'
