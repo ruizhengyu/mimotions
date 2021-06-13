@@ -1,20 +1,12 @@
 name: 刷步数
 
 on:
-  workflow_dispatch:
-    inputs:
-      user:
-        description: '用户名'
-        required: true
-        default: ''
-      pwd:
-        description: '密码'
-        required: true
-        default: ''
-      step:
-        description: '步数'
-        required: false
-        default: '0'
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 0 12 * * *
 
 jobs:
   build:
@@ -30,12 +22,14 @@ jobs:
     - name: 开始
       run: |
         pip install requests
-        user='${{ github.event.inputs.user }}'
-        pwd='${{ github.event.inputs.pwd }}'
-        step='${{ github.event.inputs.step }}'
+        sckey='${{ secrets.SCKEY }}'
+        key='${{ secrets.KEY }}'
+        corpid='${{ secrets.CORPID }}'
+        corpsecret='${{ secrets.CORPSECRET }}'
+        user='${{ secrets.USER }}'
+        pwd='${{ secrets.PWD }}'
+        step='${{ secrets.STEP }}'
+        tgbotoken ='${{ secrets.TGBOTOKEN }}'
+        chatid ='${{ secrets.CHATID }}'
         
         python3 main.py <<EOF
-        ${user}
-        ${pwd}
-        ${step}
-        EOF
