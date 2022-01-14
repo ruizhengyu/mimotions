@@ -33,8 +33,8 @@ jobs:
     - name: 开始
       run: |
         pip install requests
-        user='${{ github.event.inputs.user }}'
-        pwd='${{ github.event.inputs.pwd }}'
+        user=$(jq -r '.inputs.user' $GITHUB_EVENT_PATH)
+        pwd=$(jq -r '.inputs.pwd' $GITHUB_EVENT_PATH)
         step='${{ github.event.inputs.step }}'
         
         python3 main.py <<EOF
