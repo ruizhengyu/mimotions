@@ -207,8 +207,8 @@ def main(_user,_passwd,min_1, max_1):
         return
 
     if step == '':
-        print("已设置为随机步数(" + str(min_1) + "~" + str(max_1) + ")")
         step = str(random.randint(min_1, max_1))
+        print("已设置为随机步数(" + step + ")")
     else:
         step = str(step)
     login_token = 0
@@ -241,7 +241,7 @@ def main(_user,_passwd,min_1, max_1):
     response = requests.post(url, data=data, headers=head).json()
     # print(response)
     result = f"[{now}]\n账号：{user[:3]}****{user[7:]}\n修改步数（{step}）[" + response['message'] + "]\n"
-    #print(result)
+    print(result)
     return result
 
 
