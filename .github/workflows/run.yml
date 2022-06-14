@@ -1,15 +1,10 @@
 name: 刷步数
 
 on:
-  #push:
-  #  branches: [ main ]
-  #pull_request:
-  #  branches: [ main ]
   schedule:
-    - cron: '9 0,2,5,7,9,11,13 * * *'
+    - cron: '*/30 * * * *'
   watch:
     types: started
-  workflow_dispatch:
 
 jobs:
   build:
