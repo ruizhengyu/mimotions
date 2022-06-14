@@ -35,12 +35,12 @@ jobs:
         run: |
           sudo -E apt-get -qq update
           sudo -E apt-get install zsh -y
-          
+
       - name: 初始化Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-          
+
       - name: 开始
         run: |
           pip3 install requests
@@ -48,4 +48,4 @@ jobs:
           pwd='${{ github.event.inputs.pwd }}'
           open_get_weather='${{ github.event.inputs.open_get_weather }}'
           area='${{ github.event.inputs.area }}'
-          python3 main.py ${user} ${passwd} ${open_get_weather} ${area}
+          python3 main.py ${user} ${pwd} ${open_get_weather} ${area}
