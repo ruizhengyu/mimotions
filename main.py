@@ -127,24 +127,19 @@ def getBeijinTime():
     else:
         print("获取北京时间失败")
         return
-    if min_1 != 0 and max_1 != 0:
-        user_mi = sys.argv[1]
-        # 登录密码
-        passwd_mi = sys.argv[2]
-        user_list = user_mi.split('#')
-        passwd_list = passwd_mi.split('#')
-        if len(user_list) == len(passwd_list):
-            if K != 1.0:
-                msg_mi =  "由于天气" + type + "，已设置降低步数,系数为" + str(K) + "。\n"
-            else:
-                msg_mi = ""
-            for user_mi, passwd_mi in zip(user_list, passwd_list):
-                msg_mi += main(user_mi,passwd_mi,min_1, max_1)
-                #print(msg_mi)
-    else:
-        print("当前不是主人设定的提交步数时间或者主人设置了0步数呢，本次不提交")
-        return
 
+    step_max = 20480
+    step_min = 10240
+    user_mi = sys.argv[1]
+    # 登录密码
+    passwd_mi = sys.argv[2]
+    user_list = user_mi.split('#')
+    passwd_list = passwd_mi.split('#')
+    if len(user_list) == len(passwd_list):
+      if K != 1.0:
+        print(f'由于天气{type}，已设置降低步数,系数为${K}')
+      for user_mi, passwd_mi in zip(user_list, passwd_list):
+        main(user_mi, passwd_mi, step_min, step_max)
 
 # 获取登录code
 def get_code(location):
@@ -207,8 +202,8 @@ def main(_user,_passwd,min_1, max_1):
         return
 
     if step == '':
-        print("已设置为随机步数(" + str(min_1) + "~" + str(max_1) + ")")
         step = str(random.randint(min_1, max_1))
+        print("已设置为随机步数(" + step + ")")
     else:
         step = str(step)
     login_token = 0
@@ -241,7 +236,7 @@ def main(_user,_passwd,min_1, max_1):
     response = requests.post(url, data=data, headers=head).json()
     # print(response)
     result = f"[{now}]\n账号：{user[:3]}****{user[7:]}\n修改步数（{step}）[" + response['message'] + "]\n"
-    #print(result)
+    print(result)
     return result
 
 
@@ -261,10 +256,6 @@ def get_app_token(login_token):
     # print("app_token获取成功！")
     # print(app_token)
     return app_token
-
-
-def main_handler(event, context):
-    getBeijinTime()
 
 if __name__ == "__main__":
     getBeijinTime()
