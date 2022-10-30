@@ -16,8 +16,8 @@
 | -------- | ----- |
 | USER |   小米运动登录账号,仅支持小米运动账号对应的手机号,不支持小米账号|
 | PWD |   小米运动登录密码,仅支持小米运动账号对应的密码|
-| OPEN_GET_WEATHER |   开启根据地区天气情况降低步数**False**关闭,**True**开启|
-| AREA |   设置获取天气的地区（上面开启后必填）如：**北京**，当**OPEN_GET_WEATHER**为**False**时填写**NO**|
+| OPEN_GET_WEATHER |   开启根据地区天气情况降低步数**False**关闭,**True**开启。（当前存在问题，请设置为**False**）|
+| AREA |   设置获取天气的地区（上面开启后必填）如：**北京**，当**OPEN_GET_WEATHER**为**False**时填写**NO**。（当前存在问题，请设置为**NO**）|
 | PAT |   此处**PAT**需要申请，值为github token，教程详见：https://www.jianshu.com/p/bb82b3ad1d11 ,需要repo和workflow权限,此项必填，避免git push的权限错误。 |
 
 ### 三、多账户(用不上请忽略)
