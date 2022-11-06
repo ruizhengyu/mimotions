@@ -1,76 +1,10 @@
 # -*- coding: utf8 -*-
 import requests, time, datetime, re,sys, json, random
 
-# 设置开始
-# 用户名（格式为 13800138000）
-
-# （用于测试推送如果改了能收到推送，推送设置就没问题，看看是不是set_push列表里面没设置推送，仔细看下面我写的很详细）要修改的步数，直接输入想要修改的步数值，（默认）留空为随机步数，改了这个直接运行固定值（用于测试推送）
-# 测试好记得留空不然一直提交固定步数
-step1 = ""
-
-# 开启根据地区天气情况降低步数（默认关闭）
-open_get_weather = sys.argv[3]
-# 设置获取天气的地区（上面开启后必填）如：area = "宁波"
-area = sys.argv[4]
-
-# 以下如果看不懂直接默认就行只需改上面
-
-# 系数K查询到天气后降低步数比率，如查询得到设置地区为多云天气就会在随机后的步数乘0.9作为最终修改提交的步数
-K_dict = {"多云": 0.9, "阴": 0.8, "小雨": 0.7, "中雨": 0.5, "大雨": 0.4, "暴雨": 0.3, "大暴雨": 0.2, "特大暴雨": 0.2}
-
-# 设置运行程序时间点,24小时制（不要设置0，1，2可能会发生逻辑错误），这边设置好云函数触发里也要改成相同的小时运行，与time_list列表对应，如默认：30 0 8,10,13,15,17,19,21 * * * *，不会的改8,10,13,15,17,19,21就行替换成你要运行的时间点，其它复制
-# 默认表示为8点10点13点15点17点19点21点运行,如需修改改time_list列表，如改成：time_list = [7, 9, 13, 15, 17, 19, 20]就表示为7点9点13点15点17点19点20点运行，云函数触发里面也要同步修改
-# 说白了不是刷七次嘛,你希望在什么时候刷,设七个时间点，不要该成0，1，2（就是不要设置0点1点2点运行），其它随便改。如果要刷的次数小于7次多余的时间点不用改保持默认就行如只需要4次就改前4个，但函数触发里面要改成4个的，不能用7个的
-time_list = [8, 10, 13, 15, 17, 19, 21]
-
-# 设置运行结果推送不推送与上面时间一一对应，如：set_push列表内的第一个值与time_list列表内的第一个时间点对应，该值单独控制该时间点的推送与否（默认表示为21点（就是设置的最后一个时间点）推送其余时间运行不推送结果）
-# 也是改列表内的False不推送，True推送，每个对应上面列表的一个时间点，如果要刷的次数小于7次同样改前几个其它默认
-set_push = [True, True, True, True, True, True, True]
-
-# 最小步数（如果只需要刷步的次数少于7次就将该次数以后的步数全都改成0，如：time_list[3]: 0，表示第五次开始不运行或者直接云函数触发里面不在该时间调用均可（建议用后者））
-min_dict = {time_list[0]: 4000, time_list[1]: 5000, time_list[2]: 8000, time_list[3]: 10000, time_list[4]: 13000, time_list[5]: 16000, time_list[6]: 19000}
-# 最大步数（例如现在设置意思是在8点（你设置的第一个时间点默认8）运行会在1500到2999中随机生成一个数提交（开启气候降低步数会乘系数K）10点3000~4999。。。以此类推，步数范围建议看懂了再改，没看懂直接默认就好）
-max_dict = {time_list[0]: 5000, time_list[1]: 7000, time_list[2]: 9999, time_list[3]: 12999, time_list[4]: 15999, time_list[5]: 18999, time_list[6]: 19999}
-# 设置结束
-#now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 # 北京时间
 time_bj = datetime.datetime.today() + datetime.timedelta(hours=8)
 now = time_bj.strftime("%Y-%m-%d %H:%M:%S")
 headers = {'User-Agent': 'MiFit/5.3.0 (iPhone; iOS 14.7.1; Scale/3.00)'}
-
-#获取区域天气情况
-def getWeather():
-    if area == "NO":
-        print(area == "NO")
-        return
-    else:
-        global K, type
-        url = 'http://wthrcdn.etouch.cn/weather_mini?city=' + area
-        hea = {'User-Agent': 'Mozilla/5.0'}
-        r = requests.get(url=url, headers=hea)
-        if r.status_code == 200:
-            result = r.text
-            res = json.loads(result)
-            if "多云" in res['data']['forecast'][0]['type']:
-                K = K_dict["多云"]
-            elif "阴" in res['data']['forecast'][0]['type']:
-                K = K_dict["阴"]
-            elif "小雨" in res['data']['forecast'][0]['type']:
-                K = K_dict["小雨"]
-            elif "中雨" in res['data']['forecast'][0]['type']:
-                K = K_dict["中雨"]
-            elif "大雨" in res['data']['forecast'][0]['type']:
-                K = K_dict["大雨"]
-            elif "暴雨" in res['data']['forecast'][0]['type']:
-                K = K_dict["暴雨"]
-            elif "大暴雨" in res['data']['forecast'][0]['type']:
-                K = K_dict["大暴雨"]
-            elif "特大暴雨" in res['data']['forecast'][0]['type']:
-                K = K_dict["特大暴雨"]
-            type = res['data']['forecast'][0]['type']
-        else:
-            print("获取天气情况出错")
-
 
 #获取北京时间确定随机步数&启动主函数
 def getBeijinTime():
