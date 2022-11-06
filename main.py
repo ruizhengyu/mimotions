@@ -74,7 +74,7 @@ def login(user, password):
 def main(_user,_passwd,min_1, max_1):
     user = str(_user)
     password = str(_passwd)
-    step = str(step1)
+    step = ''
     if user == '' or password == '':
         print("用户名或密码填写有误！")
         return
