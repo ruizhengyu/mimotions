@@ -15,14 +15,7 @@ on:
         description: '密码'
         required: true
         default: ''
-      open_get_weather:
-        description: '是否使用当地天气'
-        required: false
-        default: 'True'
-      area:
-        description: '地区'
-        required: false
-        default: '北京'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,6 +39,4 @@ jobs:
           pip3 install requests
           user='${{ github.event.inputs.user }}'
           pwd='${{ github.event.inputs.pwd }}'
-          open_get_weather='${{ github.event.inputs.open_get_weather }}'
-          area='${{ github.event.inputs.area }}'
           python3 main.py ${user} ${passwd} ${open_get_weather} ${area}
