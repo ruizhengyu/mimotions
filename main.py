@@ -41,7 +41,7 @@ def login(user, password):
     }
     r1 = requests.post(url1, data=data1, headers=headers, allow_redirects=False)
     print(r1.headers)
-    location = r1.headers["Location"]
+    location = r1.headers["X-Request-Id"]
     try:
         code = get_code(location)
     except:
