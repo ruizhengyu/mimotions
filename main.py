@@ -8,9 +8,9 @@ headers = {'User-Agent': 'MiFit/5.3.0 (iPhone; iOS 14.7.1; Scale/3.00)'}
 
 #获取北京时间确定随机步数&启动主函数
 def getBeijinTime():
-    user_mi = sys.argv[0]
+    user_mi = sys.argv[1]
     # 登录密码
-    passwd_mi = sys.argv[1]
+    passwd_mi = sys.argv[2]
     user_list = user_mi.split('#')
     passwd_list = passwd_mi.split('#')
     if len(user_list) == len(passwd_list):
