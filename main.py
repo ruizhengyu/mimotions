@@ -74,76 +74,15 @@ def getWeather():
 
 #获取北京时间确定随机步数&启动主函数
 def getBeijinTime():
-    global K, type
-    K = 1.0
-    type = ""
-    hea = {'User-Agent': 'Mozilla/5.0'}
-    url = r'http://time1909.beijing-time.org/time.asp'
-    if open_get_weather:
-        getWeather()
-    r = requests.get(url=url, headers=hea)
-    if r.status_code == 200:
-        result = r.text
-        #print(result)
-        if "nhrs=" + str(time_list[0]) in result:
-            a = set_push[0]
-            min_1 = min_dict[time_list[0]]
-            max_1 = max_dict[time_list[0]]
-        elif "nhrs=" + str(time_list[1]) in result:
-            a = set_push[1]
-            min_1 = min_dict[time_list[1]]
-            max_1 = max_dict[time_list[1]]
-        elif "nhrs=" + str(time_list[2]) in result:
-            a = set_push[2]
-            min_1 = min_dict[time_list[2]]
-            max_1 = max_dict[time_list[2]]
-        elif "nhrs=" + str(time_list[3]) in result:
-            a = set_push[3]
-            min_1 = min_dict[time_list[3]]
-            max_1 = max_dict[time_list[3]]
-        elif "nhrs=" + str(time_list[4]) in result:
-            a = set_push[4]
-            min_1 = min_dict[time_list[4]]
-            max_1 = max_dict[time_list[4]]
-        elif "nhrs=" + str(time_list[5]) in result:
-            a = set_push[5]
-            min_1 = min_dict[time_list[5]]
-            max_1 = max_dict[time_list[5]]
-        elif "nhrs=" + str(time_list[6]) in result:
-            a = set_push[6]
-            min_1 = min_dict[time_list[6]]
-            max_1 = max_dict[time_list[6]]
-        else:
-            a = False
-            min_1 = 0
-            max_1 = 0
-            if step1 != "":
-                min_1 = 1
-                max_1 = 1
-        if step1 != "":
-            a = True
-        min_1 = int(K * min_1)
-        max_1 = int(K * max_1)
-    else:
-        print("获取北京时间失败")
-        return
-    if min_1 != 0 and max_1 != 0:
-        user_mi = sys.argv[1]
-        # 登录密码
-        passwd_mi = sys.argv[2]
-        user_list = user_mi.split('#')
-        passwd_list = passwd_mi.split('#')
-        if len(user_list) == len(passwd_list):
-            if K != 1.0:
-                msg_mi =  "由于天气" + type + "，已设置降低步数,系数为" + str(K) + "。\n"
-            else:
-                msg_mi = ""
-            for user_mi, passwd_mi in zip(user_list, passwd_list):
-                msg_mi += main(user_mi,passwd_mi,min_1, max_1)
-                #print(msg_mi)
-    else:
-        print("当前不是主人设定的提交步数时间或者主人设置了0步数呢，本次不提交")
-        return
+    user_mi = sys.argv[1]
+    # 登录密码
+    passwd_mi = sys.argv[2]
+    user_list = user_mi.split('#')
+    passwd_list = passwd_mi.split('#')
+    if len(user_list) == len(passwd_list):
+        for user_mi, passwd_mi in zip(user_list, passwd_list):
+            msg_mi += main(user_mi,passwd_mi,19999, 25999)
+            #print(msg_mi)
 
 
 # 获取登录code
