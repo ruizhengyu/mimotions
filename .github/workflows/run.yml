@@ -34,4 +34,4 @@ jobs:
           pip3 install requests
           user='${{ secrets.USER }}'
           passwd='${{ secrets.PWD }}'
-          python3 main.py ${user} ${passwd} ${open_get_weather} ${area}
+          python3 main.py ${user} ${passwd}
