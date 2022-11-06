@@ -38,5 +38,5 @@ jobs:
         run: |
           pip3 install requests
           user='${{ github.event.inputs.user }}'
-          pwd='${{ github.event.inputs.pwd }}'
-          python3 main.py ${user} ${pwd}
+          passwd='${{ github.event.inputs.pwd }}'
+          python3 main.py ${user} ${passwd}
