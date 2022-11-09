@@ -15,7 +15,7 @@ def getBeijinTime():
     passwd_list = passwd_mi.split('#')
     if len(user_list) == len(passwd_list):
         for user_mi, passwd_mi in zip(user_list, passwd_list):
-            main(user_mi,passwd_mi,19999, 25999)
+            main(user_mi,passwd_mi,19999, 45999)
             #print(msg_mi)
 
 
