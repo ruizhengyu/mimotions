@@ -7,9 +7,6 @@ on:
     branches: [ main ]
   schedule:
     - cron: '15 12 * * *'
-  watch:
-    types: started
-  workflow_dispatch:
 
 jobs:
   build:
